@@ -11,7 +11,19 @@ function init() {
                     .text(sample)
                     .property("value", sample)
         })
+    //create initial data that appears on first load of page
+    var initial = data.samples[0]    //pick first sample
+    //create bar chart
+    //INSERT CODE HERE
+    //create bubble chart
+    //INSERT CODE HERE
+    //show metadata
+    //INSERT CODE HERE
     })
 }
 
 init();
+
+//CREATE A HORIZONTAL BAR CHART TO DISPLAY TOP 10 OTUs FOUND IN INDIVIDUAL//
+
+//CREATE A BUBBLE CHART THAT DISPLAYS EACH SAMPLE
