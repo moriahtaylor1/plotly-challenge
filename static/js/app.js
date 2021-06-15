@@ -26,11 +26,17 @@ init();
 
 //CREATE A HORIZONTAL BAR CHART TO DISPLAY TOP 10 OTUs FOUND IN INDIVIDUAL//
 function graphBar(data){
+    //create labels
+    var labels = data.otu_ids.map(function(otu_number){
+        return "OTU " + otu_number
+    })
     //create trace
     var trace = {
-        x: data.sample_values,
-        y: data.otu_ids,
-        type: 'bar'
+        y: labels.slice(0,10),
+        x: data.sample_values.slice(0,10),
+        text: data.otu_labels.slice(0,10),
+        type: 'bar',
+        orientation: 'h'
     };
     
     var graphData = [trace];
@@ -38,8 +44,9 @@ function graphBar(data){
     //stylize
     var layout = {
         title: "Title",
-        xaxis: { title: "X-Axis"},
-        yaxis: {title: "Y-Axis"}
+        xaxis: { title: "Count"},
+        yaxis: {title: ""},
+        width: 800
     };
 
     //plot chart to a div tag with id "bar"
