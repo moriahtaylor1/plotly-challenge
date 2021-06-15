@@ -1,5 +1,4 @@
 //USE D3 LIBRARY TO READ IN JSON FILE//
-
 function init() {
     //select HTML dropdown element
     var dropdown = d3.select("#selDataset")
@@ -16,7 +15,7 @@ function init() {
     //create bar chart
     graphBar(initial);
     //create bubble chart
-    //INSERT CODE HERE
+    graphBubble(initial);
     //show metadata
     //INSERT CODE HERE
     })
@@ -38,20 +37,43 @@ function graphBar(data){
         type: 'bar',
         orientation: 'h'
     };
-    
+    //initialize trace
     var graphData = [trace];
-
     //stylize
     var layout = {
-        title: "Title",
+        title: "Top 10 Bacteria Cultures Found",
         xaxis: { title: "Count"},
         yaxis: {title: ""},
-        width: 800
+        width: 300
     };
-
     //plot chart to a div tag with id "bar"
     Plotly.newPlot("bar", graphData, layout)
-    
 }
 
 //CREATE A BUBBLE CHART THAT DISPLAYS EACH SAMPLE
+function graphBubble(data){
+    //create labels
+    var labels = data.otu_ids.map(function(otu_number){
+        return "OTU " + otu_number
+    })
+    //create trace
+    var trace = {
+        x: data.otu_ids,
+        y: data.sample_values,
+        mode: 'markers',
+        marker: {size: data.sample_values},
+        text: labels
+    };
+    //initialize trace
+    var graphData = [trace];
+    //stylize
+    var layout = {
+        title: "Bacteria Culture Per Sample",
+        xaxis: { title: "OTU ID"},
+        yaxis: {title: ""},
+        showlegend: false,
+        width: 900
+    };
+    //plot chart to a div tag with id "bubble"
+    Plotly.newPlot("bubble", graphData, layout)
+}
