@@ -60,8 +60,11 @@ function graphBubble(data){
     var trace = {
         x: data.otu_ids,
         y: data.sample_values,
+        //colorscale: 'YlGnBu',
         mode: 'markers',
-        marker: {size: data.sample_values},
+        marker: {color: data.otu_ids,
+                 size: data.sample_values,
+                 colorscale: 'Earth'},
         text: labels
     };
     //initialize trace
