@@ -17,7 +17,9 @@ function init() {
     //create bubble chart
     graphBubble(initial);
     //show metadata
-    //INSERT CODE HERE
+    var meta = data.metadata[0];
+    console.log(meta)
+    showMeta(meta);
     })
 }
 
@@ -44,13 +46,13 @@ function graphBar(data){
         title: "Top 10 Bacteria Cultures Found",
         xaxis: { title: "Count"},
         yaxis: {title: ""},
-        width: 300
+        width: 500
     };
     //plot chart to a div tag with id "bar"
     Plotly.newPlot("bar", graphData, layout)
 }
 
-//CREATE A BUBBLE CHART THAT DISPLAYS EACH SAMPLE
+//CREATE A BUBBLE CHART THAT DISPLAYS EACH SAMPLE//
 function graphBubble(data){
     //create labels
     var labels = data.otu_ids.map(function(otu_number){
@@ -60,11 +62,10 @@ function graphBubble(data){
     var trace = {
         x: data.otu_ids,
         y: data.sample_values,
-        //colorscale: 'YlGnBu',
         mode: 'markers',
         marker: {color: data.otu_ids,
                  size: data.sample_values,
-                 colorscale: 'Earth'},
+                 colorscale: 'Viridis'},
         text: labels
     };
     //initialize trace
@@ -75,8 +76,19 @@ function graphBubble(data){
         xaxis: { title: "OTU ID"},
         yaxis: {title: ""},
         showlegend: false,
-        width: 900
+        width: 1200
     };
     //plot chart to a div tag with id "bubble"
     Plotly.newPlot("bubble", graphData, layout)
+}
+
+function showMeta(data) {
+    //select HTML element sample-metadata
+    var ul = d3.select("#sample-metadata");
+    //clear panel
+    ul.html("")
+    //append information to panel as list
+    Object.entries(data).forEach(([keys, value]) => {
+        ul.append("h5").text(`${keys} : ${value}`)
+    })
 }
