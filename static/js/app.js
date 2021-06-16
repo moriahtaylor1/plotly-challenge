@@ -1,3 +1,15 @@
+//UPDATE PLOTS WHENEVER A NEW SAMPLE IS SELECTED//
+function optionChanged(newSample) {
+    d3.json("./samples.json").then(function (data) {
+        var filtered = data.samples.filter(row => row.id == newSample)
+        console.log(filtered)
+        graphBar(filtered[0])
+        graphBubble(filtered[0])
+        var filteredMeta = data.metadata.filter(row => row.id == newSample)
+        showMeta(filteredMeta[0])
+    })
+}
+
 //USE D3 LIBRARY TO READ IN JSON FILE//
 function init() {
     //select HTML dropdown element
@@ -18,7 +30,6 @@ function init() {
     graphBubble(initial);
     //show metadata
     var meta = data.metadata[0];
-    console.log(meta)
     showMeta(meta);
     })
 }
@@ -76,12 +87,14 @@ function graphBubble(data){
         xaxis: { title: "OTU ID"},
         yaxis: {title: ""},
         showlegend: false,
+        height: 700,
         width: 1200
     };
     //plot chart to a div tag with id "bubble"
     Plotly.newPlot("bubble", graphData, layout)
 }
 
+//SHOW METADATA//
 function showMeta(data) {
     //select HTML element sample-metadata
     var ul = d3.select("#sample-metadata");
